@@ -1,0 +1,23 @@
+﻿@using DAL.Data
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> _userManager
+
+@{
+    var currentUser = await _userManager.GetUserAsync(User);
+    if (currentUser != null)
+    {
+        var roles = await _userManager.GetRolesAsync(currentUser);
+        if (roles.Contains("Admin"))
+        {
+            Layout = "_AdminLayout";
+        }
+        else
+        {
+            Layout = "_CustomerLayout";
+        }
+    }
+    else
+    {
+        Layout = "_CustomerLayout";
+    }
+}
